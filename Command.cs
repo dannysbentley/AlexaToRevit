@@ -23,7 +23,8 @@ namespace AlexaToRevit
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Application app = uiapp.Application;
             Document doc = uidoc.Document;
-
+            // When button is pushed in Revit this will run the same 
+            // program as the autotrigger. 
             Alexa_Program program = new Alexa_Program();
             program.AlexaProgram(doc);
 

@@ -17,6 +17,7 @@ namespace AlexaToRevit
         public Updater(AddInId id)
         {
             m_appId = id;
+            // Register updater using a guid. 
             m_updaterId = new UpdaterId(m_appId, new Guid("75760920-bda2-4bb6-804d-b0e5b11ff950"));
         }
 
@@ -24,10 +25,12 @@ namespace AlexaToRevit
         public void Execute(UpdaterData data)
         {
             Document doc = data.GetDocument();
-
+            // When Revit Element is modifed get element id.
             var modifiedIds = data.GetModifiedElementIds();
+            // When Revit Element is added.  
             var addedIds = data.GetAddedElementIds();
 
+            // Trigger to run the alexa database program. 
             Alexa_Program program = new Alexa_Program();
             program.AlexaProgram(doc);
         }
