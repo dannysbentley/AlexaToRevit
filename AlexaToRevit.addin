@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>Command AlexaToRevit</Text>
+    <Description>Some description for AlexaToRevit</Description>
+    <Assembly>AlexaToRevit.dll</Assembly>
+    <FullClassName>AlexaToRevit.Command</FullClassName>
+    <ClientId>0ba62496-63ce-41a0-88e7-b5f2c9a079e6</ClientId>
+    <VendorId>com.typepad.thebuildingcoder</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+  <AddIn Type="Application">
+    <Name>Application AlexaToRevit</Name>
+    <Assembly>AlexaToRevit.dll</Assembly>
+    <FullClassName>AlexaToRevit.App</FullClassName>
+    <ClientId>6525b75a-c573-4aad-95b5-3f320fff1970</ClientId>
+    <VendorId>com.typepad.thebuildingcoder</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+</RevitAddIns>
