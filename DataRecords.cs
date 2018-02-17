@@ -9,6 +9,6 @@ namespace AlexaToRevit
     class DataRecords
     {
         public string label { get; set; }
-        public double Total { get; set; }
+        public double Count { get; set; }
     }
 }

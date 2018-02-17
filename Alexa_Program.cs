@@ -16,14 +16,23 @@ namespace AlexaToRevit
             RevitModel model = new RevitModel();
             CsvAlexaResponse csv = new CsvAlexaResponse(@"C:\Alexa\AlexaRead.csv"); // databaase file path
             // Collect wall the walls
-            List<Wall> walls = model.GetWalls(doc);
-            int count = walls.Count;
+            List<Wall> walls = model.GetWalls(doc);           
+            List<FamilyInstance> specialtyEquipment = model.GetFamilyInstance(doc, BuiltInCategory.OST_SpecialityEquipment);
+            List<FamilyInstance> MEPsystem = model.GetFamilyInstance(doc, BuiltInCategory.OST_MechanicalEquipment);
+
+            int WallCount = walls.Count;
+            int SpecEquipCount = specialtyEquipment.Count;
+            int MEPCount = MEPsystem.Count;
+
             double length = 0;
             double Volume = 0;
             //data objects. 
-            DataRecords CountRecords = new DataRecords();
-            DataRecords LengthRecords = new DataRecords();
-            DataRecords VolumeRecords = new DataRecords();
+            DataRecords CountWallRecords = new DataRecords();
+            DataRecords LengthWallRecords = new DataRecords();
+            DataRecords VolumeWallRecords = new DataRecords();
+            DataRecords CountSpecialEquipRecords = new DataRecords();
+            DataRecords CountMEPRecords = new DataRecords();
+
             // iterate over the walls to calculate the total length
             foreach (Element e in walls)
             {
@@ -37,19 +46,29 @@ namespace AlexaToRevit
             }
 
             // populate data objects with data. 
-            CountRecords.label = "Count";
-            CountRecords.Total = count;
+            CountWallRecords.label = "Wall Count";
+            CountWallRecords.Count = WallCount;
 
-            LengthRecords.label = "Length";
-            LengthRecords.Total = length;
+            LengthWallRecords.label = "Wall Length";
+            LengthWallRecords.Count = length;
 
-            VolumeRecords.label = "Volume";
-            VolumeRecords.Total = Volume;
+            VolumeWallRecords.label = "Wall Volume";
+            VolumeWallRecords.Count = Volume;
+
+            CountSpecialEquipRecords.label = "Specialty Equipment Count";
+            CountSpecialEquipRecords.Count = SpecEquipCount;
+
+            CountMEPRecords.label = "MEP Count";
+            CountMEPRecords.Count = MEPCount;
+
             // Add data objects to list 
             IList<DataRecords> dataRecords = new List<DataRecords>();
-            dataRecords.Add(CountRecords);
-            dataRecords.Add(LengthRecords);
-            dataRecords.Add(VolumeRecords);
+            dataRecords.Add(CountWallRecords);
+            dataRecords.Add(LengthWallRecords);
+            dataRecords.Add(VolumeWallRecords);
+
+            dataRecords.Add(CountSpecialEquipRecords);
+            dataRecords.Add(CountMEPRecords);
             //write to database .csv file. 
             csv.WriteFile(dataRecords);
         }

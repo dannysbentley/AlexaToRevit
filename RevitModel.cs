@@ -30,26 +30,38 @@ namespace AlexaToRevit
             return List_Walls;
         }
 
-        //***********************************GetParameterValue***********************************
-        public string GetParameterValue(Parameter parameter)
+        //***********************************GetFamilyInstance***********************************
+        public List<FamilyInstance> GetFamilyInstance(Document doc, BuiltInCategory category)
         {
-            switch (parameter.StorageType)
+            List<FamilyInstance> List_FamilyInstance = new List<FamilyInstance>();
+
+            ElementClassFilter familyInstanceFilter = new ElementClassFilter(typeof(FamilyInstance));
+            // Category filter 
+            ElementCategoryFilter Categoryfilter = new ElementCategoryFilter(category);
+            // Instance filter 
+            LogicalAndFilter InstancesFilter = new LogicalAndFilter(familyInstanceFilter, Categoryfilter);
+
+            FilteredElementCollector collector = new FilteredElementCollector(doc);
+            // Colletion Array of Elements
+            ICollection<Element> Elements = collector.WherePasses(InstancesFilter).ToElements();
+
+            foreach (Element e in Elements)
             {
-                case StorageType.Double:
-                    //get value with unit, AsDouble() can get value without unit
-                    return parameter.AsValueString();
-                case StorageType.ElementId:
-                    return parameter.AsElementId().IntegerValue.ToString();
-                case StorageType.Integer:
-                    //get value with unit, AsInteger() can get value without unit
-                    return parameter.AsValueString();
-                case StorageType.None:
-                    return parameter.AsValueString();
-                case StorageType.String:
-                    return parameter.AsString();
-                default:
-                    return "";
+                FamilyInstance familyInstance = e as FamilyInstance;
+
+                if (null != familyInstance)
+                {
+                    try
+                    {
+                        List_FamilyInstance.Add(familyInstance);
+                    }
+                    catch (Exception ex)
+                    {
+                        string x = ex.Message;
+                    }
+                }
             }
+            return List_FamilyInstance;
         }
     }
 }
